@@ -9,7 +9,7 @@
 // CFSizeColExt
 
 // Convert a large integer to a string with thousands separator
-std::string format_number(const LARGE_INTEGER &n)
+const std::string format_number(const LARGE_INTEGER &n)
 {
   std::ostringstream oss;
   oss.imbue(std::locale(oss.getloc(), new ThouSep<char>));
@@ -45,9 +45,7 @@ STDMETHODIMP CFSizeColExt::GetItemData (
 	USES_CONVERSION;
 	LPCTSTR   szFilename = W2CT(pscd->wszFile);
 	HANDLE    hfile;
-	char      szField[31];
 	LARGE_INTEGER liFileSize;
-
 
 	// Verify that the format id and column numbers are what we expect.
 	if ( pscid->fmtid == CLSID_FSizeColExt )
@@ -67,7 +65,7 @@ STDMETHODIMP CFSizeColExt::GetItemData (
 
 	// Open the file
 	hfile = CreateFile ( szFilename, GENERIC_READ, FILE_SHARE_READ,
-							NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
+						NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
 
 	// Quit if file could not be opened
 	if ( hfile == INVALID_HANDLE_VALUE )
