@@ -56,16 +56,24 @@ STDMETHODIMP CFSizeColExt::GetItemData (
 	if ( pscd->dwFileAttributes & (FILE_ATTRIBUTE_DIRECTORY | FILE_ATTRIBUTE_OFFLINE) )
 		return S_FALSE;
 
-	// Open the file
+	// Open the file for read
 	hfile = CreateFile ( szFilename, GENERIC_READ, FILE_SHARE_READ,
-						 NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
+							NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
 
+	// Quit if file could not be open
 	if ( hfile == INVALID_HANDLE_VALUE )
 		return false;
 
-	if ( !GetFileSizeEx( hfile, &liFileSize ) )
+	// Get the file size in bytes
+	BOOL fileSizeOk = GetFileSizeEx( hfile, &liFileSize );
+
+	// And close the file handle
+	CloseHandle ( hfile );
+	
+	if ( !fileSizeOk )
 		return false;
 	
+	// Convert the file size to char array with thousands separator
 	sprintf_s( szField, 31, "%d\0", liFileSize );
 	
 	// Create a VARIANT with the details string, and return it back to the shell.
