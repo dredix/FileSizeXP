@@ -31,6 +31,11 @@ typedef std::basic_string<TCHAR> tstring;   // a TCHAR string
 #include <shlobj.h>
 #include <shlguid.h>
 
+// IO manipulation
+#include <iostream>
+#include <locale>
+#include <sstream>
+
 #define countof(x) (sizeof(x)/sizeof((x)[0]))
 
 #ifdef DEFAULT_UNREACHABLE

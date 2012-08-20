@@ -8,6 +8,15 @@
 /////////////////////////////////////////////////////////////////////////////
 // CFSizeColExt
 
+// Convert a large integer to a string with thousands separator
+std::string format_number(const LARGE_INTEGER &n)
+{
+  std::ostringstream oss;
+  oss.imbue(std::locale(oss.getloc(), new ThouSep<char>));
+  oss << n.QuadPart;
+  return oss.str();
+}
+
 STDMETHODIMP CFSizeColExt::GetColumnInfo (
 	DWORD dwIndex, SHCOLUMNINFO* psci )
 {
@@ -56,11 +65,11 @@ STDMETHODIMP CFSizeColExt::GetItemData (
 	if ( pscd->dwFileAttributes & (FILE_ATTRIBUTE_DIRECTORY | FILE_ATTRIBUTE_OFFLINE) )
 		return S_FALSE;
 
-	// Open the file for read
+	// Open the file
 	hfile = CreateFile ( szFilename, GENERIC_READ, FILE_SHARE_READ,
 							NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL );
 
-	// Quit if file could not be open
+	// Quit if file could not be opened
 	if ( hfile == INVALID_HANDLE_VALUE )
 		return false;
 
@@ -73,12 +82,11 @@ STDMETHODIMP CFSizeColExt::GetItemData (
 	if ( !fileSizeOk )
 		return false;
 	
-	// Convert the file size to char array
-	sprintf_s( szField, 31, "%lld\0", liFileSize );
-	
+	// Convert the file size to a formatted string
+	std::string s = format_number( liFileSize );
+
 	// Create a VARIANT with the details string, and return it back to the shell.
-	CComVariant vData ( szField );
-	
+	CComVariant vData ( s.c_str() );
 
 	vData.Detach ( pvarData );
 
