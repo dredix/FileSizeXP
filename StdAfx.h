@@ -31,25 +31,6 @@ typedef std::basic_string<TCHAR> tstring;   // a TCHAR string
 #include <shlobj.h>
 #include <shlguid.h>
 
-struct CID3v1Tag    // NOTE that strings are fixed-length and might not be 0-terminated!
-{
-    char szTag[3];
-    char szTitle[30];
-    char szArtist[30];
-    char szAlbum[30];
-    char szYear[4];
-    char szComment[30];
-    char byGenre;
-};
-
-struct CID3CacheEntry
-{
-    tstring   sFilename;
-    CID3v1Tag rTag;
-};
-
-typedef std::list<CID3CacheEntry> list_ID3Cache;
-
 #define countof(x) (sizeof(x)/sizeof((x)[0]))
 
 #ifdef DEFAULT_UNREACHABLE
