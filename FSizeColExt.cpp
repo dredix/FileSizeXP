@@ -9,7 +9,7 @@
 // CFSizeColExt
 
 STDMETHODIMP CFSizeColExt::GetColumnInfo (
-    DWORD dwIndex, SHCOLUMNINFO* psci )
+	DWORD dwIndex, SHCOLUMNINFO* psci )
 {
 	// We have 1 column, so return S_FALSE if dwIndex is not zero.
 	if ( dwIndex != 0 )
@@ -31,7 +31,7 @@ STDMETHODIMP CFSizeColExt::GetColumnInfo (
 }
 
 STDMETHODIMP CFSizeColExt::GetItemData (
-    LPCSHCOLUMNID pscid, LPCSHCOLUMNDATA pscd, VARIANT* pvarData )
+	LPCSHCOLUMNID pscid, LPCSHCOLUMNDATA pscd, VARIANT* pvarData )
 {
 	USES_CONVERSION;
 	LPCTSTR   szFilename = W2CT(pscd->wszFile);

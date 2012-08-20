@@ -25,14 +25,14 @@ END_OBJECT_MAP()
 extern "C"
 BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID /*lpReserved*/)
 {
-    if (dwReason == DLL_PROCESS_ATTACH)
-    {
-        _Module.Init(ObjectMap, hInstance, &LIBID_FILESIZEXPLib);
-        DisableThreadLibraryCalls(hInstance);
-    }
-    else if (dwReason == DLL_PROCESS_DETACH)
-        _Module.Term();
-    return TRUE;    // ok
+	if (dwReason == DLL_PROCESS_ATTACH)
+	{
+		_Module.Init(ObjectMap, hInstance, &LIBID_FILESIZEXPLib);
+		DisableThreadLibraryCalls(hInstance);
+	}
+	else if (dwReason == DLL_PROCESS_DETACH)
+		_Module.Term();
+	return TRUE;    // ok
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -40,7 +40,7 @@ BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID /*lpReserved*/)
 
 STDAPI DllCanUnloadNow()
 {
-    return (_Module.GetLockCount()==0) ? S_OK : S_FALSE;
+	return (_Module.GetLockCount()==0) ? S_OK : S_FALSE;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -48,7 +48,7 @@ STDAPI DllCanUnloadNow()
 
 STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, LPVOID* ppv)
 {
-    return _Module.GetClassObject(rclsid, riid, ppv);
+	return _Module.GetClassObject(rclsid, riid, ppv);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -56,29 +56,29 @@ STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, LPVOID* ppv)
 
 STDAPI DllRegisterServer()
 {
-    // On NT, add our extension to the list of approved extensions.
-    if ( 0 == (GetVersion() & 0x80000000) )
-        {
-        CRegKey reg;
-        LONG    lRet;
+	// On NT, add our extension to the list of approved extensions.
+	if ( 0 == (GetVersion() & 0x80000000) )
+		{
+		CRegKey reg;
+		LONG    lRet;
 
-        lRet = reg.Open ( HKEY_LOCAL_MACHINE, _T("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Shell Extensions\\Approved"),
-                          KEY_SET_VALUE );
+		lRet = reg.Open ( HKEY_LOCAL_MACHINE, _T("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Shell Extensions\\Approved"),
+						  KEY_SET_VALUE );
 
-        if ( ERROR_SUCCESS != lRet )
-            return E_ACCESSDENIED;
+		if ( ERROR_SUCCESS != lRet )
+			return E_ACCESSDENIED;
 
-        lRet = reg.SetValue ( _T("File size column ext"), 
-                              _T("{C27E7751-4561-462A-AB14-6835ECF16A28}") );
+		lRet = reg.SetValue ( _T("File size column ext"), 
+							  _T("{C27E7751-4561-462A-AB14-6835ECF16A28}") );
 
-        reg.Close();
+		reg.Close();
 
-        if ( ERROR_SUCCESS != lRet )
-            return E_ACCESSDENIED;
-        }
+		if ( ERROR_SUCCESS != lRet )
+			return E_ACCESSDENIED;
+		}
 
-    // registers object, typelib and all interfaces in typelib
-    return _Module.RegisterServer(false);
+	// registers object, typelib and all interfaces in typelib
+	return _Module.RegisterServer(false);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -86,22 +86,22 @@ STDAPI DllRegisterServer()
 
 STDAPI DllUnregisterServer()
 {
-    // On NT, remove our extension from the list of approved extensions.
+	// On NT, remove our extension from the list of approved extensions.
 
-    if ( 0 == (GetVersion() & 0x80000000) )
-        {
-        CRegKey reg;
-        LONG    lRet;
+	if ( 0 == (GetVersion() & 0x80000000) )
+		{
+		CRegKey reg;
+		LONG    lRet;
 
-        lRet = reg.Open ( HKEY_LOCAL_MACHINE, _T("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Shell Extensions\\Approved"),
-                          KEY_SET_VALUE );
+		lRet = reg.Open ( HKEY_LOCAL_MACHINE, _T("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Shell Extensions\\Approved"),
+						  KEY_SET_VALUE );
 
-        if ( ERROR_SUCCESS == lRet )
-            {
-            reg.DeleteValue ( _T("{C27E7751-4561-462A-AB14-6835ECF16A28}") );
-            reg.Close();
-            }
-        }
+		if ( ERROR_SUCCESS == lRet )
+			{
+			reg.DeleteValue ( _T("{C27E7751-4561-462A-AB14-6835ECF16A28}") );
+			reg.Close();
+			}
+		}
 
-    return _Module.UnregisterServer(false);
+	return _Module.UnregisterServer(false);
 }

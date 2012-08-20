@@ -7,26 +7,26 @@
 // CFSizeColExt
 
 class ATL_NO_VTABLE CFSizeColExt :
-    public CComObjectRootEx<CComSingleThreadModel>,
-    public CComCoClass<CFSizeColExt, &CLSID_FSizeColExt>,
-    public IColumnProvider
+	public CComObjectRootEx<CComSingleThreadModel>,
+	public CComCoClass<CFSizeColExt, &CLSID_FSizeColExt>,
+	public IColumnProvider
 {
 public:
-    CFSizeColExt() { }
+	CFSizeColExt() { }
 
-    BEGIN_COM_MAP(CFSizeColExt)
-        COM_INTERFACE_ENTRY_IID(IID_IColumnProvider, IColumnProvider)
-    END_COM_MAP()
+	BEGIN_COM_MAP(CFSizeColExt)
+		COM_INTERFACE_ENTRY_IID(IID_IColumnProvider, IColumnProvider)
+	END_COM_MAP()
 
-    DECLARE_REGISTRY_RESOURCEID(IDR_FSIZECOLEXT)
+	DECLARE_REGISTRY_RESOURCEID(IDR_FSIZECOLEXT)
 
 public:
 
-    // IColumnProvider 
+	// IColumnProvider 
 public:
-    STDMETHODIMP Initialize(LPCSHCOLUMNINIT psci) { return S_OK; }
-    STDMETHODIMP GetColumnInfo(DWORD dwIndex, SHCOLUMNINFO* psci);
-    STDMETHODIMP GetItemData(LPCSHCOLUMNID pscid, LPCSHCOLUMNDATA pscd, VARIANT* pvarData);
+	STDMETHODIMP Initialize(LPCSHCOLUMNINIT psci) { return S_OK; }
+	STDMETHODIMP GetColumnInfo(DWORD dwIndex, SHCOLUMNINFO* psci);
+	STDMETHODIMP GetItemData(LPCSHCOLUMNID pscid, LPCSHCOLUMNDATA pscd, VARIANT* pvarData);
 
 };
 
