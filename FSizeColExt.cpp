@@ -73,11 +73,12 @@ STDMETHODIMP CFSizeColExt::GetItemData (
 	if ( !fileSizeOk )
 		return false;
 	
-	// Convert the file size to char array with thousands separator
-	sprintf_s( szField, 31, "%d\0", liFileSize );
+	// Convert the file size to char array
+	sprintf_s( szField, 31, "%lld\0", liFileSize );
 	
 	// Create a VARIANT with the details string, and return it back to the shell.
 	CComVariant vData ( szField );
+	
 
 	vData.Detach ( pvarData );
 
