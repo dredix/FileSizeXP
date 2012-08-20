@@ -1,0 +1,25 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FileSizeXP", "FileSizeXP.vcxproj", "{2CA34717-2E58-7B71-0B7B-0D045561DA84}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release MinDependency|Win32 = Release MinDependency|Win32
+		Release MinSize|Win32 = Release MinSize|Win32
+		Unicode Debug|Win32 = Unicode Debug|Win32
+		Unicode Release MinDependency|Win32 = Unicode Release MinDependency|Win32
+		Unicode Release MinSize|Win32 = Unicode Release MinSize|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2CA34717-2E58-7B71-0B7B-0D045561DA84}.Debug|Win32.ActiveCfg = Debug|Win32
+		{2CA34717-2E58-7B71-0B7B-0D045561DA84}.Release MinDependency|Win32.ActiveCfg = Release MinDependency|Win32
+		{2CA34717-2E58-7B71-0B7B-0D045561DA84}.Release MinSize|Win32.ActiveCfg = Release MinSize|Win32
+		{2CA34717-2E58-7B71-0B7B-0D045561DA84}.Unicode Debug|Win32.ActiveCfg = Unicode Debug|Win32
+		{2CA34717-2E58-7B71-0B7B-0D045561DA84}.Unicode Release MinDependency|Win32.ActiveCfg = Unicode Release MinDependency|Win32
+		{2CA34717-2E58-7B71-0B7B-0D045561DA84}.Unicode Release MinSize|Win32.ActiveCfg = Unicode Release MinSize|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

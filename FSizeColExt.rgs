@@ -1,0 +1,23 @@
+HKCR
+{
+    NoRemove CLSID
+    {
+        ForceRemove {C27E7751-4561-462A-AB14-6835ECF16A28} = s 'ID3v1 Tag Viewer Class'
+        {
+            InprocServer32 = s '%MODULE%'
+            {
+                val ThreadingModel = s 'Apartment'
+            }
+        }
+    }
+    NoRemove Folder
+    {
+        NoRemove Shellex
+        {
+            NoRemove ColumnHandlers
+            {
+                ForceRemove {C27E7751-4561-462A-AB14-6835ECF16A28} = s 'ID3v1 viewer column ext'
+            }
+        }
+    }
+}

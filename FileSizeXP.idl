@@ -1,0 +1,38 @@
+// FileSizeXP.idl : IDL source for FileSizeXP.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (FileSizeXP.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+	[
+		object,
+		uuid(27C64FD2-8F75-48CF-BFF9-59A981E7A339),
+	
+		helpstring("IFSizeColExt Interface"),
+		pointer_default(unique)
+	]
+	interface IFSizeColExt : IUnknown
+	{
+	};
+
+[
+	uuid(E9071CDE-B7DB-4F3A-AA5F-0343CBC610C0),
+	version(1.0),
+	helpstring("FileSizeXP 1.0 Type Library")
+]
+library FILESIZEXPLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+	[
+		uuid(C27E7751-4561-462A-AB14-6835ECF16A28),
+		helpstring("FSizeColExt Class")
+	]
+	coclass FSizeColExt
+	{
+		[default] interface IFSizeColExt;
+	};
+};
