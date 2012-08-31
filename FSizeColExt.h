@@ -30,10 +30,4 @@ public:
 
 };
 
-// Thousand separators facet, for number formatting
-template<class Char> 
-struct ThouSep : public std::numpunct<Char> {
-  std::string do_grouping() const { return "\3"; }
-};
-
 #endif //__FSIZECOLEXT_H_

@@ -8,15 +8,6 @@
 /////////////////////////////////////////////////////////////////////////////
 // CFSizeColExt
 
-// Convert a large integer to a string with thousands separator
-const std::string format_number(const LARGE_INTEGER &n)
-{
-  std::ostringstream oss;
-  oss.imbue(std::locale(oss.getloc(), new ThouSep<char>));
-  oss << n.QuadPart;
-  return oss.str();
-}
-
 STDMETHODIMP CFSizeColExt::GetColumnInfo (
 	DWORD dwIndex, SHCOLUMNINFO* psci )
 {
@@ -26,10 +17,10 @@ STDMETHODIMP CFSizeColExt::GetColumnInfo (
 
 	psci->scid.fmtid = CLSID_FSizeColExt;   // Use our CLSID as the format ID
 	psci->scid.pid   = 0;                   // Use the column # as the ID
-	psci->vt         = VT_LPSTR;				// We'll return the data as a string
+	psci->vt         = VT_LPSTR;            // We'll return the data as a string
 	psci->fmt        = LVCFMT_RIGHT;        // Text will be right-aligned
-	psci->csFlags    = SHCOLSTATE_TYPE_INT; // Data should be sorted as ints
-	psci->cChars     = 10;                  // Default col width in chars
+	psci->csFlags    = SHCOLSTATE_TYPE_INT; // Data should be sorted as ints 
+	psci->cChars     = 20;                  // Default col width in chars
  
 	wcsncpy ( psci->wszTitle, L"Size in Bytes", MAX_COLUMN_NAME_LEN );
 	wcsncpy ( psci->wszDescription, L"Size in Bytes", MAX_COLUMN_DESC_LEN );
@@ -43,9 +34,10 @@ STDMETHODIMP CFSizeColExt::GetItemData (
 	LPCSHCOLUMNID pscid, LPCSHCOLUMNDATA pscd, VARIANT* pvarData )
 {
 	USES_CONVERSION;
-	LPCTSTR   szFilename = W2CT(pscd->wszFile);
-	HANDLE    hfile;
+	LPCTSTR       szFilename = W2CT(pscd->wszFile);
+	HANDLE        hfile;
 	LARGE_INTEGER liFileSize;
+	char          szField[31];
 
 	// Verify that the format id and column numbers are what we expect.
 	if ( pscid->fmtid == CLSID_FSizeColExt )
@@ -80,11 +72,11 @@ STDMETHODIMP CFSizeColExt::GetItemData (
 	if ( !fileSizeOk )
 		return false;
 	
-	// Convert the file size to a formatted string
-	std::string s = format_number( liFileSize );
+	// Convert the file size to a string
+	sprintf_s( szField, 31, "%lld\0", liFileSize.QuadPart );
 
 	// Create a VARIANT with the details string, and return it back to the shell.
-	CComVariant vData ( s.c_str() );
+	CComVariant vData ( szField );
 
 	vData.Detach ( pvarData );
 
